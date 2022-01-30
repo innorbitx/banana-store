@@ -1,5 +1,6 @@
 import { useRef, useState } from 'react';
 import { useFrame } from '@react-three/fiber';
+import { useControls } from 'leva';
 
 const Box = (props) => {
   // This reference gives us direct access to the THREE.Mesh object
@@ -10,6 +11,9 @@ const Box = (props) => {
   // Subscribe this component to the render-loop, rotate the mesh every frame
   useFrame((state, delta) => (ref.current.rotation.x += 0.01));
   // Return the view, these are regular Threejs elements expressed in JSX
+
+  const { color } = useControls({ color: '#ff0000' });
+
   return (
     <mesh
       {...props}
@@ -20,7 +24,7 @@ const Box = (props) => {
       onPointerOut={(event) => hover(false)}
     >
       <boxGeometry args={[1, 1, 1]} />
-      <meshStandardMaterial color={hovered ? '#11aaff' : '#ff0000'} />
+      <meshStandardMaterial color={hovered ? '#11aaff' : color} />
     </mesh>
   );
 };
